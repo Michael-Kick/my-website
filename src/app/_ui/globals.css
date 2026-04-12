@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,58 +8,58 @@
 @layer base {
     :root {
         color-scheme: light;
-        --color-primary: #1d4ed8;
-        --color-primary-hover: #1e40af;
+        --color-primary: #0d9488;
+        --color-primary-hover: #0f766e;
         --color-on-primary: #ffffff;
-        --color-secondary: #475569;
-        --color-danger: #dc2626;
-        --color-background: #f5f7fb;
-        --color-text-base: #0f172a;
-        --color-border: #e2e8f0;
+        --color-secondary: #5c6470;
+        --color-danger: #c0392b;
+        --color-background: #f8f9fb;
+        --color-text-base: #1a1d23;
+        --color-border: #dde1ea;
         --color-contrast: #ffffff;
-        --color-contrastDark: #eef2f6;
+        --color-contrastDark: #eef0f5;
     }
     @media (prefers-color-scheme: dark) {
         :root {
             color-scheme: dark;
-            --color-primary: #60a5fa;
-            --color-primary-hover: #3b82f6;
-            --color-on-primary: #0b1120;
-            --color-secondary: #9aa6b2;
-            --color-danger: #f87171;
-            --color-background: #0b1120;
-            --color-text-base: #e5e7eb;
-            --color-border: #273449;
-            --color-contrast: #111827;
-            --color-contrastDark: #1b2333;
+            --color-primary: #91a7ff;
+            --color-primary-hover: #748ffc;
+            --color-on-primary: #0d0f18;
+            --color-secondary: #868e96;
+            --color-danger: #e55c5c;
+            --color-background: #13151a;
+            --color-text-base: #dee2e6;
+            --color-border: #2c2f36;
+            --color-contrast: #1c1e24;
+            --color-contrastDark: #23262d;
         }
     }
 
-    :root[data-theme='light']{
+    :root[data-theme='light'] {
         color-scheme: light;
-        --color-primary: #1d4ed8;
-        --color-primary-hover: #1e40af;
+        --color-primary: #0d9488;
+        --color-primary-hover: #0f766e;
         --color-on-primary: #ffffff;
-        --color-secondary: #475569;
-        --color-danger: #dc2626;
-        --color-background: #f5f7fb;
-        --color-text-base: #0f172a;
-        --color-border: #e2e8f0;
+        --color-secondary: #5c6470;
+        --color-danger: #c0392b;
+        --color-background: #f8f9fb;
+        --color-text-base: #1a1d23;
+        --color-border: #dde1ea;
         --color-contrast: #ffffff;
-        --color-contrastDark: #eef2f6;
+        --color-contrastDark: #eef0f5;
     }
 
-    :root[data-theme='dark']{
+    :root[data-theme='dark'] {
         color-scheme: dark;
-        --color-primary: #60a5fa;
-        --color-primary-hover: #3b82f6;
-        --color-on-primary: #0b1120;
-        --color-secondary: #9aa6b2;
-        --color-danger: #f87171;
-        --color-background: #0b1120;
-        --color-text-base: #e5e7eb;
-        --color-border: #273449;
-        --color-contrast: #111827;
-        --color-contrastDark: #1b2333;
+        --color-primary: #2dd4bf;
+        --color-primary-hover: #14b8a6;
+        --color-on-primary: #0d1f1e;
+        --color-secondary: #868e96;
+        --color-danger: #e55c5c;
+        --color-background: #13151a;
+        --color-text-base: #dee2e6;
+        --color-border: #2c2f36;
+        --color-contrast: #1c1e24;
+        --color-contrastDark: #23262d;
     }
 }

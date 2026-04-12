@@ -98,8 +98,9 @@ const workExp: IWorkDetail[] = [
 		activity: 'Java Development',
 		projectName: 'Warehouse Management Software Deployment',
 		description: [
-			'Installed and configured warehouse software on-site for the food, fashion, and industrial goods sectors',
-			'Used Java for system setup and integration',
+			'Working in project-based business, adapting standard warehouse management software to individual customer requirements across the food, fashion, and industrial goods sectors',
+			'Involved in on-site deployments, supporting the installation and configuration of the software directly at customer facilities',
+			'Using Java for system integration, configuration, and customisation work',
 		],
 		start_date: new Date(2025, 3, 1),
 		end_date: new Date(),

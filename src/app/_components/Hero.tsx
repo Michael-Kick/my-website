@@ -14,7 +14,10 @@ function Hero() {
             <div className="pointer-events-none absolute -left-24 -bottom-24 h-56 w-56 rounded-full bg-primary opacity-10 blur-3xl" />
             <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] items-center">
                 <div className="space-y-6">
-                    <p className="text-xs uppercase tracking-[0.2em] text-secondary font-jetbrains">Software Engineer</p>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <p className="text-xs uppercase tracking-[0.2em] text-secondary font-jetbrains">Software Engineer</p>
+                        <span className="rounded-full border border-primary bg-primary/10 px-3 py-1 text-xs font-medium text-primary">Available for freelance</span>
+                    </div>
                     <div className="space-y-4">
                         <h1 className="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
                             {heroFirstName}{' '}
@@ -22,7 +25,7 @@ function Hero() {
                         </h1>
                         <p className="text-secondary text-lg leading-relaxed md:text-xl">
                             I design and build full-stack products that feel calm, clear, and reliable.
-                            Based in Regensburg, I currently work at TGW as a Java Software Developer.
+                            Based in Regensburg — available for freelance projects alongside my work at TGW.
                         </p>
                     </div>
                     <div className="flex flex-wrap gap-3 text-sm text-secondary">
@@ -41,8 +44,8 @@ function Hero() {
                             <p className="mt-2 text-sm text-secondary">Regensburg, Germany</p>
                         </div>
                         <div className="rounded-xl border border-border bg-contrastDark p-4">
-                            <p className="text-xs uppercase tracking-[0.2em] text-secondary font-jetbrains">Current role</p>
-                            <p className="mt-2 text-sm text-secondary">Java Software Developer at TGW</p>
+                            <p className="text-xs uppercase tracking-[0.2em] text-secondary font-jetbrains">Freelance</p>
+                            <p className="mt-2 text-sm text-secondary">Open to new projects</p>
                         </div>
                     </div>
                 </div>

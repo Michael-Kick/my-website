@@ -41,9 +41,20 @@ const aboutMeSections = [
         ],
     },
     {
+        title: "Freelance",
+        paragraphs: [
+            "Alongside my full-time role I am available for freelance software projects. I take on a limited number of projects at a time to keep quality high and communication clear.",
+        ],
+        bullets: [
+            "Web applications with Next.js, React, and TypeScript.",
+            "Backend services and REST APIs with Java or Node.js.",
+            "UX improvements, performance tuning, and code quality reviews.",
+        ],
+    },
+    {
         title: "Outside work",
         paragraphs: [
-            "I enjoy exploring new tools, contributing to open-source ideas, and spending time outdoors to reset.",
+            "I enjoy exploring new tools and spending time outdoors to reset.",
         ],
     },
 ];

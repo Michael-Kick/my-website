@@ -13,7 +13,7 @@ function Resume() {
     return (
         <div className="w-full">
             <div>
-                <ResumeElement heading="Work Experience" workElement={resumeObj.work_exp}/>
+                <ResumeElement heading="Work Experience" workElement={[...resumeObj.work_exp].reverse()}/>
                 <ResumeElement heading="Education" educationElement={resumeObj.education}/>
             </div>
             <div className="w-full flex justify-center mt-8 mb-8">

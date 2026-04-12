@@ -11,7 +11,7 @@ function ResumeList() {
                 <div className="flex gap-40 justify-evenly">
                     <div className="flex-1 max-w-96">
                         <h2 className="text-3xl font-semibold mb-10">Professional Experience</h2>
-                        {resumeObj.work_exp.map((exp, id: number) =>
+                        {[...resumeObj.work_exp].reverse().map((exp, id: number) =>
                             <WorkElement key={id} resumeElement={exp}/>
                         )}
                     </div>

@@ -9,13 +9,13 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        base: '18px', // Optimized for 1920x1080 displays (reduced from 20px)
-        lg: '22px',   // Proportionally reduced from 25px
-        xl: '26px',   // Proportionally reduced from 30px
+        base: '15.5px',
+        lg: '18px',
+        xl: '21px',
       },
       fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
         jetbrains: ['JetBrains Mono', 'monospace'],
-        montserrat: ['Montserrat', 'sans-serif'],
       },
       colors: {
         primary: 'var(--color-primary)',

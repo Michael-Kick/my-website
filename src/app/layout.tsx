@@ -59,7 +59,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
     return (
         <html lang="en" suppressHydrationWarning>
-        <body className="bg-background font-montserrat text-text text-base flex flex-col min-h-screen transition-colors duration-200">
+        <body className="bg-background font-sans text-text text-base flex flex-col min-h-screen transition-colors duration-200">
         <Providers>
             {/* Layout UI */}
             {/* Place children where you want to render a page or nested layout */}
