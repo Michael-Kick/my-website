@@ -5,7 +5,7 @@ import ButtonLink from "./ButtonLink";
 function Hero() {
     const heroFirstName = "Michael";
     const heroLastName = "Kick";
-    const heroImageSrc = "/images/hero-portrait.svg";
+    const heroImageSrc = "/images/profile.png";
 
     return (
         <section className="relative overflow-hidden rounded-2xl border border-border bg-contrast p-8 md:p-12">
@@ -52,16 +52,16 @@ function Hero() {
                 <div className="relative">
                     <div className="pointer-events-none absolute inset-0 -rotate-2 rounded-3xl border border-border bg-contrastDark" />
                     <div className="relative overflow-hidden rounded-3xl border border-border bg-contrastDark p-6">
-                        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-contrast">
+                        <div className="relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-full border border-border bg-contrast ring-2 ring-primary/30">
                             <Image
                                 src={heroImageSrc}
                                 width={1000}
-                                height={1200}
+                                height={1000}
                                 priority
-                                quality={80}
+                                quality={90}
                                 sizes="(max-width: 1024px) 100vw, 45vw"
                                 className="h-full w-full object-cover"
-                                alt="Portrait or illustration of Michael Kick"
+                                alt="Portrait illustration of Michael Kick"
                             />
                         </div>
                         <div className="mt-6 grid gap-4 sm:grid-cols-2">

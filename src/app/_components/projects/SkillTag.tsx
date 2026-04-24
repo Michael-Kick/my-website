@@ -33,13 +33,24 @@ function SkillTag(props: SkillTagProps) {
     const skill = mySkillsData.find((el) => el.key == props.skillKey);
     const icon = skill ? skillIcons[skill.key] : null;
 
+    // Expose the brand colors as CSS variables so they only apply on hover,
+    // while the default state matches the site's gray/green design palette.
+    const brandVars = {
+        '--skill-bg': skill?.backgroundColor,
+        '--skill-text': skill?.textColor,
+    } as React.CSSProperties;
+
     return (
-        <div style={{backgroundColor:skill?.backgroundColor}}
-             className="border border-border rounded-2xl flex justify-center w-fit">
-            <div className="flex h-auto items-center mt-0.5 mb-0.5 ms-3 me-1">
+        <div
+            style={brandVars}
+            className="group border border-border rounded-2xl flex justify-center w-fit bg-contrastDark hover:bg-[var(--skill-bg)] transition-colors duration-200"
+        >
+            <div className="flex h-auto items-center mt-0.5 mb-0.5 ms-3 me-1 text-primary group-hover:text-[var(--skill-text)] transition-colors duration-200">
                 {icon}
             </div>
-            <div style={{color:skill?.textColor}} className="mt-0.5 mb-0.5 ms-1 me-3">{skill?.name}</div>
+            <div className="mt-0.5 mb-0.5 ms-1 me-3 text-secondary group-hover:text-[var(--skill-text)] transition-colors duration-200">
+                {skill?.name}
+            </div>
         </div>
     );
 }
