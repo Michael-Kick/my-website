@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import NavLink from "./NavLink";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const pathname = usePathname();
 
     const navLinks = [
         {href: "/", label: "Home"},
@@ -50,16 +52,19 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className="md:hidden border-t border-border bg-background">
                     <div className="flex flex-col px-4 py-2">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="py-3 text-text border-b border-border last:border-b-0 hover:text-primary hover:underline hover:decoration-primary hover:underline-offset-4 transition-colors"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isActive = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
+                            return (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`py-3 border-b border-border last:border-b-0 transition-colors hover:text-primary ${isActive ? 'text-primary font-medium' : 'text-text'}`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {link.label}
+                                </a>
+                            );
+                        })}
                     </div>
                 </div>
             )}

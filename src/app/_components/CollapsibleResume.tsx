@@ -7,7 +7,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import ResumePDF from "./resume/ResumePDF";
 
 export default function CollapsibleResume() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     return (
         <div className="relative bg-contrast border border-border w-full max-w-5xl mx-auto rounded-2xl shadow-md overflow-hidden">
