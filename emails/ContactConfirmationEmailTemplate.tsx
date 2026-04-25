@@ -7,7 +7,7 @@ interface ContactConfirmationEmailProps {
     userMessage: string;
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://your-domain.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://michas-tech.com';
 
 export const ContactConfirmationEmailTemplate = ({
                                                      userFirstname,
@@ -24,10 +24,6 @@ export const ContactConfirmationEmailTemplate = ({
                 <Text style={paragraph}>
                     Thank you for reaching out! I have received your message and will get back to you as soon as possible.
                 </Text>
-                <Text style={paragraph}><strong>Summary of your message:</strong></Text>
-                <Text style={paragraph}><strong>Email:</strong> {userEmail}</Text>
-                <Text style={paragraph}><strong>Message:</strong></Text>
-                <Text style={messageBox}>{userMessage}</Text>
                 <Section style={btnContainer}>
                     <Button style={button} href={siteUrl}>
                         Visit Website

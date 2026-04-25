@@ -1,10 +1,11 @@
-import {Resend} from 'resend';
+import nodemailer from 'nodemailer';
+import { render } from '@react-email/render';
 import ContactConfirmationEmailTemplate from "../../../../emails/ContactConfirmationEmailTemplate";
 import OwnerNotificationEmailTemplate from "../../../../emails/OwnerNotificationEmailTemplate";
 
 // Rate limiting: simple in-memory store (use Redis in production for multi-instance)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_MAX = 5; // max requests per window
+const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour in ms
 
 function isRateLimited(ip: string): boolean {
@@ -24,7 +25,6 @@ function isRateLimited(ip: string): boolean {
     return false;
 }
 
-// Input validation
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_MESSAGE_LENGTH = 5000;
@@ -81,10 +81,9 @@ function validateInput(data: {
     return errors;
 }
 
-// Recipient is fixed server-side - never trust client input for this
-const CONTACT_EMAIL = process.env.CONTACT_EMAIL || process.env.RESEND_FROM_EMAIL;
-const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL;
+const GMAIL_USER = process.env.GMAIL_USER;
+const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const TURNSTILE_BYPASS = process.env.TURNSTILE_BYPASS === 'true';
 const turnstileBypassEnabled = TURNSTILE_BYPASS && process.env.NODE_ENV !== 'production';
@@ -124,11 +123,22 @@ async function verifyTurnstile(token: string, ip: string | null) {
     }
 }
 
+function createTransporter() {
+    return nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: GMAIL_USER,
+            pass: GMAIL_APP_PASSWORD,
+        },
+    });
+}
+
 export const POST = async (req: Request) => {
     try {
-        if (!RESEND_API_KEY || !CONTACT_EMAIL || (!TURNSTILE_SECRET_KEY && !turnstileBypassEnabled)) {
+        if (!GMAIL_USER || !GMAIL_APP_PASSWORD || !CONTACT_EMAIL || (!TURNSTILE_SECRET_KEY && !turnstileBypassEnabled)) {
             const missing: string[] = [];
-            if (!RESEND_API_KEY) missing.push('RESEND_API_KEY');
+            if (!GMAIL_USER) missing.push('GMAIL_USER');
+            if (!GMAIL_APP_PASSWORD) missing.push('GMAIL_APP_PASSWORD');
             if (!CONTACT_EMAIL) missing.push('CONTACT_EMAIL');
             if (!TURNSTILE_SECRET_KEY && !turnstileBypassEnabled) missing.push('TURNSTILE_SECRET_KEY');
             console.error('Contact form configuration error:', missing.join(', '));
@@ -138,9 +148,8 @@ export const POST = async (req: Request) => {
             );
         }
 
-        const resend = new Resend(RESEND_API_KEY);
+        const transporter = createTransporter();
 
-        // Get IP for rate limiting
         const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
                    req.headers.get('x-real-ip') ||
                    'unknown';
@@ -169,7 +178,6 @@ export const POST = async (req: Request) => {
             return Response.json({ error: 'Failed to send message.' }, { status: 400 });
         }
 
-        // Validate input
         const validationErrors = validateInput({ email, firstName, lastName, message, subject, phone, company });
         if (validationErrors.length > 0) {
             return Response.json(
@@ -196,13 +204,8 @@ export const POST = async (req: Request) => {
             }
         }
 
-        // Send email to owner (notification)
-        const { data: ownerData, error: ownerError } = await resend.emails.send({
-            from: `Contact Form <${RESEND_FROM_EMAIL}>`,
-            to: [CONTACT_EMAIL],
-            replyTo: email,
-            subject: subject || `Contact from ${firstName} ${lastName || ''}`.trim(),
-            react: <OwnerNotificationEmailTemplate
+        const ownerHtml = await render(
+            <OwnerNotificationEmailTemplate
                 userEmail={email}
                 userFirstname={firstName}
                 userLastname={lastName}
@@ -210,37 +213,39 @@ export const POST = async (req: Request) => {
                 userPhone={phone}
                 userCompany={company}
                 subject={subject}
-            />,
+            />
+        );
+
+        await transporter.sendMail({
+            from: `Contact Form <${GMAIL_USER}>`,
+            to: CONTACT_EMAIL,
+            replyTo: email,
+            subject: subject || `Contact from ${firstName} ${lastName || ''}`.trim(),
+            html: ownerHtml,
         });
 
-        if (ownerError) {
-            console.error('Resend error (owner notification):', ownerError);
-            return Response.json({ error: 'Failed to send email' }, { status: 500 });
+        let confirmationSent = true;
+        try {
+            const visitorHtml = await render(
+                <ContactConfirmationEmailTemplate
+                    userEmail={email}
+                    userFirstname={firstName}
+                    userMessage={message}
+                />
+            );
+
+            await transporter.sendMail({
+                from: `Michael Kick <${GMAIL_USER}>`,
+                to: email,
+                subject: 'Thank you for reaching out!',
+                html: visitorHtml,
+            });
+        } catch (error) {
+            console.error('Error sending confirmation email:', error);
+            confirmationSent = false;
         }
 
-        // Send confirmation email to visitor
-        const { data: visitorData, error: visitorError } = await resend.emails.send({
-            from: `Michael Kick <${RESEND_FROM_EMAIL}>`,
-            to: [email],
-            subject: 'Thank you for reaching out!',
-            react: <ContactConfirmationEmailTemplate
-                userEmail={email}
-                userFirstname={firstName}
-                userMessage={message}
-            />,
-        });
-
-        if (visitorError) {
-            console.error('Resend error (visitor confirmation):', visitorError);
-            // Don't fail the request if visitor email fails - owner notification succeeded
-            // Log the error but return success
-        }
-
-        return Response.json({
-            success: true,
-            data: ownerData,
-            confirmationSent: !visitorError
-        });
+        return Response.json({ success: true, confirmationSent });
     } catch (error: unknown) {
         console.error('Contact form error:', error);
         return Response.json({ error: 'An unexpected error occurred' }, { status: 500 });
