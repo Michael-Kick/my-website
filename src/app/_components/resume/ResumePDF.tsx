@@ -4,227 +4,264 @@ import resumeObj from "./workExperience";
 import formatMonthYearISO from '../../_utils/DateFormat';
 import { mySkillsData } from '../../_utils/skillData';
 
-// Define a modern, professional color palette
-const colors = {
-    ink: '#0f172a',        // Deep navy
-    slate: '#334155',      // Slate text
-    muted: '#64748b',      // Muted supporting text
-    accent: '#0f766e',     // Teal accent
-    paper: '#f8fafc',      // Soft paper background
-    border: '#e2e8f0'      // Subtle borders
+const c = {
+    ink:    '#0f172a',
+    slate:  '#334155',
+    muted:  '#64748b',
+    accent: '#0f766e',
+    light:  '#f1f5f9',
+    border: '#e2e8f0',
 };
 
-// Create styles
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
     page: {
         fontFamily: 'Helvetica',
-        fontSize: 10.5,
-        paddingTop: 28,
-        paddingLeft: 42,
-        paddingRight: 44,
-        paddingBottom: 30,
-        lineHeight: 1.5,
-        color: colors.slate,
-        backgroundColor: '#fcfcfd',
+        fontSize: 8,
+        paddingTop: 24,
+        paddingHorizontal: 32,
+        paddingBottom: 20,
+        color: c.slate,
+        backgroundColor: '#fff',
     },
+    // ── Header ──────────────────────────────────────────────
     header: {
-        marginBottom: 22,
-        paddingBottom: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.border,
-        alignItems: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        borderBottomWidth: 1.5,
+        borderBottomColor: c.accent,
+        paddingBottom: 8,
+        marginBottom: 10,
     },
     name: {
-        fontSize: 25,
+        fontSize: 20,
         fontFamily: 'Helvetica-Bold',
-        color: colors.ink,
-        letterSpacing: 0.2,
-        marginBottom: 8,
+        color: c.ink,
+        letterSpacing: 0.3,
     },
-    title: {
-        fontSize: 10.5,
-        color: colors.muted,
-        fontFamily: 'Helvetica',
-        letterSpacing: 0.6,
+    titleText: {
+        fontSize: 8.5,
+        color: c.muted,
+        letterSpacing: 0.5,
         textTransform: 'uppercase',
+        marginTop: 2,
     },
+    headerMeta: {
+        fontSize: 7.5,
+        color: c.muted,
+        textAlign: 'right',
+        lineHeight: 1.5,
+    },
+    // ── Two-column body ──────────────────────────────────────
+    body: {
+        flexDirection: 'row',
+        gap: 18,
+    },
+    leftCol: {
+        flex: 6,
+    },
+    rightCol: {
+        flex: 4,
+    },
+    // ── Section ─────────────────────────────────────────────
     section: {
-        marginBottom: 16,
+        marginBottom: 8,
     },
     sectionHeader: {
         flexDirection: 'row',
-        alignItems: 'flex-end',
-        marginBottom: 8,
+        alignItems: 'center',
+        marginBottom: 5,
     },
     sectionTitle: {
-        fontSize: 11.5,
+        fontSize: 7.5,
         fontFamily: 'Helvetica-Bold',
-        color: colors.accent,
-        letterSpacing: 0.8,
+        color: c.accent,
+        letterSpacing: 0.9,
         textTransform: 'uppercase',
     },
     sectionRule: {
         flexGrow: 1,
-        height: 1,
-        marginLeft: 10,
-        marginBottom: 2,
-        backgroundColor: colors.border,
+        height: 0.8,
+        marginLeft: 6,
+        backgroundColor: c.border,
     },
+    // ── Entry ────────────────────────────────────────────────
     entry: {
+        marginBottom: 6,
+        paddingLeft: 7,
+        borderLeftWidth: 2,
+        borderLeftColor: c.accent,
+    },
+    entryTop: {
         flexDirection: 'row',
-        marginBottom: 12,
-    },
-    timelineContainer: {
-        width: '10%',
-        position: 'relative',
-        paddingLeft: 2,
-    },
-    timelineDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: colors.accent,
-        position: 'absolute',
-        top: 6,
-        left: 2,
-    },
-    timelineLine: {
-        position: 'absolute',
-        left: 6,
-        top: 8,
-        bottom: -8, // Extend line below the last dot
-        width: 1,
-        backgroundColor: colors.border,
-    },
-    contentContainer: {
-        width: '90%',
-        padding: 12,
-        backgroundColor: colors.paper,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderLeftWidth: 3,
-        borderLeftColor: colors.accent,
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
     },
     jobTitle: {
-        fontSize: 11.5,
-        fontFamily: 'Helvetica-Bold',
-        color: colors.ink,
-    },
-    company: {
-        fontSize: 11,
-        fontFamily: 'Helvetica-Bold',
-        color: colors.accent,
-        textDecoration: 'none',
-    },
-    dateAndLocation: {
-        fontSize: 9,
-        fontFamily: 'Helvetica-Oblique',
-        color: colors.muted,
-        marginTop: 2,
-        marginBottom: 6,
-    },
-    bullet: {
-        marginLeft: 10,
-        fontSize: 9.5,
-        color: colors.slate,
-        lineHeight: 1.4,
-    },
-    thesisTitle: {
-        marginTop: 4,
-        marginBottom: 2,
-        fontSize: 9.5,
-        color: colors.slate,
-        fontFamily: 'Helvetica-Oblique',
-    },
-    skillsText: {
         fontSize: 8.5,
         fontFamily: 'Helvetica-Bold',
-        marginTop: 6,
-        color: colors.accent,
-    }
+        color: c.ink,
+        flex: 1,
+    },
+    dateText: {
+        fontSize: 7,
+        color: c.muted,
+        fontFamily: 'Helvetica-Oblique',
+        marginLeft: 4,
+        flexShrink: 0,
+    },
+    company: {
+        fontSize: 7.5,
+        color: c.accent,
+        fontFamily: 'Helvetica-Bold',
+        textDecoration: 'none',
+        marginBottom: 2,
+    },
+    location: {
+        fontSize: 7,
+        color: c.muted,
+        fontFamily: 'Helvetica-Oblique',
+        marginBottom: 2,
+    },
+    bullet: {
+        fontSize: 7.5,
+        color: c.slate,
+        lineHeight: 1.35,
+        marginLeft: 6,
+    },
+    skillsLine: {
+        fontSize: 7,
+        color: c.muted,
+        marginTop: 2,
+    },
+    skillsLineAccent: {
+        fontFamily: 'Helvetica-Bold',
+        color: c.accent,
+    },
+    // ── Skills grid (right col) ──────────────────────────────
+    skillPill: {
+        fontSize: 7.5,
+        color: c.slate,
+        backgroundColor: c.light,
+        paddingHorizontal: 5,
+        paddingVertical: 2,
+        borderRadius: 3,
+        marginRight: 4,
+        marginBottom: 4,
+    },
+    skillsWrap: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
 });
 
-// Create Document Component
 const ResumePDF = () => {
-    const sortedWorkExp = [...resumeObj.work_exp].sort((a, b) => b.end_date.getTime() - a.end_date.getTime());
+    const sortedWork = [...resumeObj.work_exp].sort((a, b) => b.end_date.getTime() - a.end_date.getTime());
+
+    const skillName = (key: number) => mySkillsData.find(s => s.key === key)?.name ?? '';
+
+    const allSkillKeys = Array.from(new Set([
+        ...resumeObj.work_exp.flatMap(e => e.skills),
+        ...resumeObj.education.flatMap(e => e.skills),
+    ]));
 
     return (
         <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.header}>
-                    <Text style={styles.name}>Michael Kick</Text>
-                    <Text style={styles.title}>Software Engineer</Text>
-                </View>
-
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>Work Experience</Text>
-                        <View style={styles.sectionRule} />
-                    </View>
+            <Page size="A4" style={s.page}>
+                {/* Header */}
+                <View style={s.header}>
                     <View>
-                        <View style={styles.timelineLine} />
-                        {sortedWorkExp.map((exp, id) => {
-                            const skillNames = exp.skills.map(skillKey => mySkillsData.find(s => s.key === skillKey)?.name).filter(Boolean).join(', ');
-                            return (
-                                <View key={id} style={styles.entry} wrap={false}>
-                                    <View style={styles.timelineContainer}>
-                                        <View style={styles.timelineDot} />
-                                    </View>
-                                    <View style={styles.contentContainer}>
-                                        <Text style={styles.jobTitle}>{exp.activity}</Text>
-                                        <Link style={styles.company} src={exp.companyLink}>
-                                            @{exp.companyName}
-                                        </Link>
-                                        <Text style={styles.dateAndLocation}>
-                                            {formatMonthYearISO(exp.start_date)} - {formatMonthYearISO(exp.end_date)} | {exp.city}, {exp.country}
-                                        </Text>
-                                        {exp.description.map((point, pointId) => (
-                                             <Text key={pointId} style={styles.bullet}>• {point}</Text>
-                                        ))}
-                                        <Text style={styles.skillsText}>Skills: {skillNames}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
+                        <Text style={s.name}>Michael Kick</Text>
+                        <Text style={s.titleText}>Software Engineer</Text>
                     </View>
+                    <Text style={s.headerMeta}>
+                        {'Regensburg, Germany\nmichas-tech.com'}
+                    </Text>
                 </View>
 
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>Education</Text>
-                        <View style={styles.sectionRule} />
-                    </View>
-                     <View>
-                        <View style={styles.timelineLine} />
-                        {resumeObj.education.map((edu, id) => {
-                            const skillNames = edu.skills.map(skillKey => mySkillsData.find(s => s.key === skillKey)?.name).filter(Boolean).join(', ');
-                            return (
-                                <View key={id} style={styles.entry} wrap={false}>
-                                    <View style={styles.timelineContainer}>
-                                        <View style={styles.timelineDot} />
-                                    </View>
-                                    <View style={styles.contentContainer}>
-                                        <Text style={styles.jobTitle}>{edu.academicTitle}</Text>
-                                         <Link style={styles.company} src={edu.uniLink}>
-                                            @{edu.university}
-                                        </Link>
-                                        <Text style={styles.dateAndLocation}>
-                                            {formatMonthYearISO(edu.start_date)} - {formatMonthYearISO(edu.end_date)} | {edu.city}, {edu.country}
-                                        </Text>
-                                        <Text style={styles.thesisTitle}>{edu.thesisTitle}</Text>
-                                         {edu.description.map((point, pointId) => (
-                                             <Text key={pointId} style={styles.bullet}>• {point}</Text>
+                {/* Body */}
+                <View style={s.body}>
+                    {/* Left: Work Experience */}
+                    <View style={s.leftCol}>
+                        <View style={s.section}>
+                            <View style={s.sectionHeader}>
+                                <Text style={s.sectionTitle}>Work Experience</Text>
+                                <View style={s.sectionRule} />
+                            </View>
+                            {sortedWork.map((exp, i) => {
+                                const skills = exp.skills.map(skillName).filter(Boolean).join(', ');
+                                return (
+                                    <View key={i} style={s.entry} wrap={false}>
+                                        <View style={s.entryTop}>
+                                            <Text style={s.jobTitle}>{exp.activity}</Text>
+                                            <Text style={s.dateText}>
+                                                {formatMonthYearISO(exp.start_date)} – {formatMonthYearISO(exp.end_date)}
+                                            </Text>
+                                        </View>
+                                        <Link style={s.company} src={exp.companyLink}>@{exp.companyName}</Link>
+                                        <Text style={s.location}>{exp.city}, {exp.country}</Text>
+                                        {exp.description.slice(0, 2).map((pt, j) => (
+                                            <Text key={j} style={s.bullet}>• {pt}</Text>
                                         ))}
-                                        <Text style={styles.skillsText}>Skills: {skillNames}</Text>
+                                        {skills ? (
+                                            <Text style={s.skillsLine}>
+                                                <Text style={s.skillsLineAccent}>Skills: </Text>{skills}
+                                            </Text>
+                                        ) : null}
                                     </View>
-                                </View>
-                            )
-                        })}
+                                );
+                            })}
+                        </View>
+                    </View>
+
+                    {/* Right: Education + Skills */}
+                    <View style={s.rightCol}>
+                        <View style={s.section}>
+                            <View style={s.sectionHeader}>
+                                <Text style={s.sectionTitle}>Education</Text>
+                                <View style={s.sectionRule} />
+                            </View>
+                            {resumeObj.education.map((edu, i) => {
+                                const skills = edu.skills.map(skillName).filter(Boolean).join(', ');
+                                return (
+                                    <View key={i} style={s.entry} wrap={false}>
+                                        <View style={s.entryTop}>
+                                            <Text style={s.jobTitle}>{edu.academicTitle}</Text>
+                                        </View>
+                                        <Text style={s.dateText}>
+                                            {formatMonthYearISO(edu.start_date)} – {formatMonthYearISO(edu.end_date)}
+                                        </Text>
+                                        <Link style={s.company} src={edu.uniLink}>@{edu.university}</Link>
+                                        <Text style={s.location}>{edu.city}, {edu.country}</Text>
+                                        {edu.description.slice(0, 2).map((pt, j) => (
+                                            <Text key={j} style={s.bullet}>• {pt}</Text>
+                                        ))}
+                                        {skills ? (
+                                            <Text style={s.skillsLine}>
+                                                <Text style={s.skillsLineAccent}>Skills: </Text>{skills}
+                                            </Text>
+                                        ) : null}
+                                    </View>
+                                );
+                            })}
+                        </View>
+
+                        <View style={s.section}>
+                            <View style={s.sectionHeader}>
+                                <Text style={s.sectionTitle}>Skills</Text>
+                                <View style={s.sectionRule} />
+                            </View>
+                            <View style={s.skillsWrap}>
+                                {allSkillKeys.map((key, i) => (
+                                    <Text key={i} style={s.skillPill}>{skillName(key)}</Text>
+                                ))}
+                            </View>
+                        </View>
                     </View>
                 </View>
             </Page>
         </Document>
     );
-}
+};
+
 export default ResumePDF;

@@ -43,12 +43,12 @@ function SkillTag(props: SkillTagProps) {
     return (
         <div
             style={brandVars}
-            className="group border border-border rounded-2xl flex justify-center w-fit bg-contrastDark hover:bg-[var(--skill-bg)] transition-colors duration-200"
+            className="group/tag border border-border rounded-2xl flex justify-center w-fit bg-contrastDark hover:bg-[var(--skill-bg)] transition-colors duration-200"
         >
-            <div className="flex h-auto items-center mt-0.5 mb-0.5 ms-3 me-1 text-primary group-hover:text-[var(--skill-text)] transition-colors duration-200">
+            <div className="flex h-auto items-center mt-0.5 mb-0.5 ms-3 me-1 text-primary group-hover/tag:text-[var(--skill-text)] transition-colors duration-200">
                 {icon}
             </div>
-            <div className="mt-0.5 mb-0.5 ms-1 me-3 text-secondary group-hover:text-[var(--skill-text)] transition-colors duration-200">
+            <div className="mt-0.5 mb-0.5 ms-1 me-3 text-secondary group-hover/tag:text-[var(--skill-text)] transition-colors duration-200">
                 {skill?.name}
             </div>
         </div>
